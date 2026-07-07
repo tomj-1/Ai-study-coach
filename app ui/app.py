@@ -5,11 +5,12 @@ class app:
 
     st.header("paste your notes")
 
-    notes = st.text_area("notes", placeholder = "paste notes here")
-
+    saved_note = {
+    "notes_title": st.text_input("notes title",placeholder = "put note title here", label_visibility= "collapsed"),
+    "notes" : st.text_area("notes", placeholder = "paste notes here", label_visibility= "collapsed")
+    }
     if st.button('Quiz Generate'):
     #code for quiz generation 
-        
         # TODO: add code to put questions into quiz array after quiz genraetion code made 
         quiz = []
         
