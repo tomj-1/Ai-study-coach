@@ -19,6 +19,25 @@ class AI:
         quiz = json.loads(response.output_text)
         
         return quiz
+    
+    def grade_quiz(self, quiz):
+        self.quiz = quiz
+        client = OpenAI()
+        response = client.responses.create(
+        model="gpt-5.4-mini",
+        input= f"""
+        From the quiz, grade each user_answer against the answer.
+        Return JSON only with: question, answer, user_answer, topic, difficulty, grade, feedback.
+        Grade should be from 0 to 1.
+        Feedback should be short.
+        Quiz: {quiz}
+        """,
+        text={"format": {"type": "json_object"}},
+        )
+
+        feedback = json.loads(response.output_text)
+        
+        return feedback
 
     
 
