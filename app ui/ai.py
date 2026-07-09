@@ -1,5 +1,6 @@
 from openai import OpenAI
-class ai:
+import json
+class AI:
     
     def generate_quiz(self, notes):
         self.notes = notes 
@@ -8,14 +9,16 @@ class ai:
         model="gpt-5.4-mini",
         input= f"""
         From notes, make 5 quiz Qs.
-        JSON only: question, answer, topic, difficulty.
+        JSON only: question, answer, topic, difficulty, user_answer(just a field on the json the user will give this).
         Answers under 15 words.
         Notes: {notes}
         """,
         text={"format": {"type": "json_object"}},
         )
+
+        quiz = json.loads(response.output_text)
         
-        return response.output_text
+        return quiz
 
     
 
