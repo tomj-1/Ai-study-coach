@@ -9,8 +9,10 @@ class App:
     "notes_title": st.text_input("notes title",placeholder = "put note title here", label_visibility= "collapsed"),
     "notes" : st.text_area("notes", placeholder = "paste notes here", label_visibility= "collapsed")
     }
-    ai = AI()
+    ai = AI.AI()
     if st.button('Quiz Generate'):
+        #TODO: look into session state to fix screen 
+        
         quiz = ai.generate_quiz(saved_note) 
         
         for i, word in enumerate(quiz):

@@ -8,17 +8,18 @@ class AI:
         response = client.responses.create(
         model="gpt-5.4-mini",
         input= f"""
-        From notes, make 5 quiz Qs.
-        JSON only: question, answer, topic, difficulty, user_answer(just a field on the json the user will give this).
-        Answers under 15 words.
+        Return JSON only with a "quiz" list.
+        Each quiz item has: question, answer, topic, difficulty, user_answer.
+        Make exactly 5 quiz items.
+        Set user_answer to "".
         Notes: {notes}
         """,
         text={"format": {"type": "json_object"}},
         )
 
-        quiz = json.loads(response.output_text)
+        data = json.loads(response.output_text)
         
-        return quiz
+        return data["quiz"]
     
     def grade_quiz(self, quiz):
         self.quiz = quiz
