@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 import AI
 class App:
     st.title("Ai Study Coach")
@@ -25,7 +26,10 @@ class App:
             word["user_answer"] = answer
 
     if st.button('Grade Quiz'):
-        st.text_area(ai.grade_quiz(quiz))
+        gradedQuiz = ai.grade_quiz(st.session_state.quiz)
+        st.json(gradedQuiz)
+        df = pd.DataFrame(gradedQuiz)
+        df.to_csv('app ui/data/results.csv', index=False)
 
     if st.button('weak topics'):
         #code for showing weak topics
