@@ -29,7 +29,7 @@ class App:
         gradedQuiz = ai.grade_quiz(st.session_state.quiz)
         st.json(gradedQuiz)
         df = pd.DataFrame(gradedQuiz)
-        df.to_csv('app ui/data/results.csv', index=False)
+        df.to_csv('data/results.csv', index=False)
 
     if st.button('weak topics'):
         #code for showing weak topics
