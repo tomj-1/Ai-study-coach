@@ -12,7 +12,7 @@ class App:
     }
     ai = AI.AI()
 
-    #using session states to save values so trhey aren't lost on reruns 
+    #using session states to save values so they aren't lost on reruns 
     if "quiz" not in st.session_state:
         st.session_state.quiz = []
     
