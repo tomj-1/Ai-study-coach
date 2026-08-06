@@ -29,10 +29,24 @@ class App:
         st.session_state.notes = saved_note
         st.session_state.quiz = ai.generate_quiz(saved_note)
 
-    if st.button("Grade Quiz"):
-        gradedQuiz = ai.grade_quiz(st.session_state.quiz)
+    if "graded_quiz" not in st.session_state:
+        st.session_state.graded_quiz = []
 
-        for i, item in enumerate(gradedQuiz):
+    if "graded" not in st.session_state:
+        st.session_state["graded"] = False
+
+    if st.button("Grade Quiz"):
+        st.session_state["graded"] = True
+        st.session_state.graded_quiz = ai.grade_quiz(st.session_state.quiz)
+        path = "app ui/data/results.csv"
+        df = pd.DataFrame(st.session_state.graded_quiz)
+        # method for header names since when I delete data on the file it won't make a header next try
+        file_needs_header = not os.path.exists(path) or os.path.getsize(path) == 0
+        df.to_csv(path, mode="a", header=file_needs_header, index=False)
+
+    # code to display feedback
+    if st.session_state["graded"]:
+        for i, item in enumerate(st.session_state.graded_quiz):
             st.markdown(f"Question {i + 1}")
             st.write(item["question"])
 
@@ -47,12 +61,17 @@ class App:
 
             st.divider
 
+        wrong_questions = []
 
-        path = "app ui/data/results.csv"
-        df = pd.DataFrame(gradedQuiz)
-        # method for header names since when I delete data on the file it won't make a header next try
-        file_needs_header = not os.path.exists(path) or os.path.getsize(path) == 0
-        df.to_csv(path, mode="a", header=file_needs_header, index=False)
+        for item in st.session_state.graded_quiz:
+            if item["grade"] == 0:
+                wrong_questions.append(item)
+
+        if st.button(
+            "Retry Wrong Question",
+            key="retry_wrong_questions_button",
+        ):
+            st.session_state.quiz = wrong_questions
 
     if "show_weak_topics" not in st.session_state:
         st.session_state.show_weak_topics = False

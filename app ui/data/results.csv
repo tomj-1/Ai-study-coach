@@ -89,3 +89,89 @@ What is 2 - 2?,0,0,basic subtraction,easy,1,Correct.
 What is 2 × 2?,4,4,basic multiplication,easy,1,Correct.
 What is the result of adding 1 and 1?,2,2,basic addition,easy,1,Correct.
 What is the result of subtracting 2 from 2?,0,0,basic subtraction,easy,1,Correct.
+What is the result of adding 7 + 5?,12,12,addition,easy,1,Correct.
+What is the result of subtracting 9 - 4?,5,6,subtraction,easy,0,Incorrect. The correct answer is 5.
+What is the result of multiplying 6 × 3?,18,18,multiplication,easy,1,Correct.
+What is the result of dividing 20 ÷ 4?,5,6,division,easy,0,Incorrect. The correct answer is 5.
+What is the value of 3 + 2 × 4 using order of operations?,11,1,order of operations,medium,0,Incorrect. The correct answer is 11.
+What is the result of adding 7 + 5?,12,12,addition,easy,1,Correct.
+What is the result of subtracting 9 - 4?,5,6,subtraction,easy,0,Incorrect. 9 - 4 = 5.
+What is the result of multiplying 6 × 3?,18,18,multiplication,easy,1,Correct.
+What is the result of dividing 20 ÷ 4?,5,6,division,easy,0,Incorrect. 20 ÷ 4 = 5.
+What is the value of 3 + 2 × 4 using order of operations?,11,1,order of operations,medium,0,"Incorrect. Use order of operations: 2 × 4 = 8, then 3 + 8 = 11."
+What is the role of an enzyme in a chemical reaction?,An enzyme acts as a catalyst that speeds up a chemical reaction without being consumed.,12,Enzyme function,easy,0,"Incorrect. The correct answer is that an enzyme acts as a catalyst, speeding up a chemical reaction without being consumed."
+How does an enzyme affect activation energy?,It lowers the activation energy needed for a reaction to occur.,6,Enzyme function,easy,0,Incorrect. Enzymes lower the activation energy required for a reaction.
+"What does the JSON key ""quiz"" represent in the required structure?",It is the top-level array key that contains the list of quiz questions.,18,JSON structure,easy,0,"Incorrect. The key ""quiz"" refers to the top-level array containing the quiz questions."
+"In the required JSON format, what type of value should each item inside ""quiz"" be?","Each item should be an object containing question, answer, topic, difficulty, and user_answer fields.",6,JSON structure,easy,0,Incorrect. Each item should be an object with the specified fields.
+Why must the response be valid JSON only?,Because the output must be machine-readable and match the specified structure exactly.,1,JSON structure,easy,0,Incorrect. The response must be valid JSON so it is machine-readable and matches the required structure exactly.
+What is the result of 7 + 5?,12,12,addition,easy,1,Correct.
+What is the result of 9 - 4?,5,5,subtraction,easy,1,Correct.
+What is the result of 6 × 3?,18,10,multiplication,easy,0,Incorrect. The correct answer is 18.
+What is the result of 20 ÷ 4?,5,5,division,easy,1,Correct.
+What is the value of 3 + 4 × 2 using order of operations?,11,12,order of operations,medium,0,"Incorrect. Multiplication comes before addition: 4 × 2 = 8, then 3 + 8 = 11."
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 2 + 1?,3,3,basic addition,easy,1,Correct.
+What is 1 + 2?,3,3,basic addition,easy,1,Correct.
+What is 3 + 1?,4,4,basic addition,easy,1,Correct.
+What is 4 + 1?,5,2,basic addition,easy,0,Incorrect. The correct answer is 5.
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 2 + 1?,3,3,basic addition,easy,1,Correct.
+What is 3 + 1?,4,4,basic addition,easy,1,Correct.
+What is 4 + 1?,5,0,basic addition,easy,0,Incorrect. The correct answer is 5.
+What is 5 + 1?,6,6,basic addition,easy,1,Correct.
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 1 + 1 using counting objects?,2,2,basic addition,easy,1,Correct.
+"If you start with 1 and add 1 more, how many do you have?",2,2,basic addition,easy,1,Correct.
+What number comes after adding one to one?,2,2,basic addition,easy,1,Correct.
+Fill in the blank: 1 + 1 = __,2,0,basic addition,easy,0,Incorrect. The correct answer is 2.
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 2 + 1?,3,3,basic addition,easy,1,Correct.
+What is 3 + 1?,4,4,basic addition,easy,1,Correct.
+What is 4 + 1?,5,2,basic addition,easy,0,Incorrect. The correct answer is 5.
+What is 5 + 1?,6,4,basic addition,easy,0,Incorrect. The correct answer is 6.
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 2 + 1?,3,3,basic addition,easy,1,Correct.
+What is 3 + 1?,4,4,basic addition,easy,1,Correct.
+What is 4 + 1?,5,2,basic addition,easy,0,Incorrect. The correct answer is 5.
+What is 5 + 1?,6,4,basic addition,easy,0,Incorrect. The correct answer is 6.
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 1 + 2?,3,3,basic addition,easy,1,Correct.
+What is 2 + 2?,4,4,basic addition,easy,1,Correct.
+What is 3 + 1?,4,3,basic addition,easy,0,Incorrect. The correct answer is 4.
+What is 0 + 1?,1,1,basic addition,easy,1,Correct.
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 2 + 1?,3,3,basic addition,easy,1,Correct.
+What is 3 + 1?,4,4,basic addition,easy,1,Correct.
+What is 1 + 2?,3,1,basic addition,easy,0,Incorrect. The correct answer is 3.
+What is 4 + 1?,5,5,basic addition,easy,1,Correct.
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What number do you get when you add one and one?,2,2,basic addition,easy,1,Correct.
+Solve: 1 + 1 = ?,2,2,basic addition,easy,1,Correct.
+"If you start with 1 and add 1 more, what is the total?",2,2,basic addition,easy,1,Correct.
+How much is one plus one?,2,0,basic addition,easy,0,Incorrect. The correct answer is 2.
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 1 + 0?,1,1,identity property of addition,easy,1,Correct.
+What is 2 + 1?,3,3,basic addition,easy,1,Correct.
+What is 1 + 1 + 1?,3,3,basic addition,easy,1,Correct.
+"If you add one more to 1, what do you get?",2,0,basic addition,easy,0,Incorrect. Adding one more to 1 gives 2.
+What is 1 + 1?,2,2,addition,easy,1,Correct.
+What is 2 + 1?,3,3,addition,easy,1,Correct.
+What is 3 + 1?,4,4,addition,easy,1,Correct.
+What is 4 + 1?,5,5,addition,easy,1,Correct.
+What is 5 + 1?,6,2,addition,easy,0,Incorrect. The correct answer is 6.
+What is 1 + 1?,2,2,addition,easy,1,Correct.
+"If you have 1 apple and get 1 more apple, how many apples do you have?",2,2,addition,easy,1,Correct.
+What number comes after 1 when counting up by one?,2,2,number sequence,easy,1,Correct.
+What is the sum of one and one?,2,2,addition,easy,1,Correct.
+How many objects are there if two groups each contain 1 object?,2,0,addition,easy,0,Incorrect. Two groups with 1 object each make 2 objects.
+How many objects are there if two groups each contain 1 object?,2,2,addition,easy,1,Correct. Two groups with 1 object each make 2 objects.
+What is 1 + 1?,2,0,basic addition,easy,0,Incorrect. 1 + 1 = 2.
+What is 1 + 0?,1,0,addition identity,easy,0,"Incorrect. Adding 0 does not change the number, so 1 + 0 = 1."
+What is 2 - 1?,1,0,basic subtraction,easy,0,Incorrect. 2 - 1 = 1.
+"If you have one apple and get one more apple, how many apples do you have?",2,0,basic addition,easy,0,Incorrect. One apple plus one more apple makes 2 apples.
+What number comes after 1 when counting forward?,2,2,counting sequence,easy,1,Correct.
+What is 1 + 1?,2,2,addition,easy,1,Correct.
+What is 1 plus 1 in numeric form?,2,2,addition,easy,1,Correct.
+"If you combine one item with one more item, how many items do you have?",2,0,counting,easy,0,Incorrect. The correct answer is 2.
+What number comes after adding 1 and 1?,2,0,addition,easy,0,Incorrect. The correct answer is 2.
+Calculate 1 + 1.,2,0,addition,easy,0,Incorrect. The correct answer is 2.
