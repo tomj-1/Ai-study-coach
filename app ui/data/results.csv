@@ -84,3 +84,8 @@ What is the formula for speed?,speed = distance / time,f,speed formula,easy,0,In
 What is Newton’s second law of motion?,Force equals mass times acceleration (F = ma).,w,Newton’s second law of motion,medium,0,"Incorrect. Newton’s second law states that force equals mass times acceleration, F = ma."
 What does the law of conservation of energy state?,"Energy cannot be created or destroyed, only transferred or transformed.",d,conservation of energy,medium,0,"Incorrect. The law states that energy cannot be created or destroyed, only transferred or transformed."
 What is the unit of electric current?,ampere (A),w,unit of electric current,easy,0,Incorrect. The unit of electric current is ampere (A).
+What is 1 + 1?,2,2,basic addition,easy,1,Correct.
+What is 2 - 2?,0,0,basic subtraction,easy,1,Correct.
+What is 2 × 2?,4,4,basic multiplication,easy,1,Correct.
+What is the result of adding 1 and 1?,2,2,basic addition,easy,1,Correct.
+What is the result of subtracting 2 from 2?,0,0,basic subtraction,easy,1,Correct.

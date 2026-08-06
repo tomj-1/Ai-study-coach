@@ -31,8 +31,23 @@ class App:
 
     if st.button("Grade Quiz"):
         gradedQuiz = ai.grade_quiz(st.session_state.quiz)
-        # displays the json text
-        st.json(gradedQuiz)
+
+        for i, item in enumerate(gradedQuiz):
+            st.markdown(f"Question {i + 1}")
+            st.write(item["question"])
+
+            st.write("Your answer:")
+            st.write(item["user_answer"])
+
+            st.write("Correct Answer")
+            st.write(item["answer"])
+
+            st.write(f"Grade: {item['grade'] * 100:.0f}")
+            st.write(f"Feedback: {item['feedback']}")
+
+            st.divider
+
+
         path = "app ui/data/results.csv"
         df = pd.DataFrame(gradedQuiz)
         # method for header names since when I delete data on the file it won't make a header next try
@@ -72,6 +87,7 @@ class App:
                     )
 
     if st.session_state.quiz:
+        st.title("Quiz: ")
         for i, word in enumerate(st.session_state.quiz):
             question = word["question"]
             answer = st.text_area(
