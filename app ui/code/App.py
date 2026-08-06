@@ -21,13 +21,18 @@ class App:
     }
     ai = AI.AI()
 
+    difficulty = st.segmented_control(
+        "select difficuklty",
+        options = ["Easy", "Medium", "Hard"],
+        default = "Medium",
+        )
     # using session states to save values so they aren't lost on reruns
     if "quiz" not in st.session_state:
         st.session_state.quiz = []
 
     if st.button("Quiz Generate"):
         st.session_state.notes = saved_note
-        st.session_state.quiz = ai.generate_quiz(saved_note)
+        st.session_state.quiz = ai.generate_quiz(saved_note, difficulty)
 
     if "graded_quiz" not in st.session_state:
         st.session_state.graded_quiz = []
