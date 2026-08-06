@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import AI
 import os
-
+from pypdf import PdfReader
 
 class App:
     st.title("Ai Study Coach")
@@ -19,6 +19,22 @@ class App:
             "notes", placeholder="paste notes here", label_visibility="collapsed"
         ),
     }
+
+    uploaded_file = st.file_uploader("Upload a PDF", type = "pdf")
+
+    if uploaded_file is not None:
+        reader = PdfReader(uploaded_file)
+
+        pdf_text = ""
+
+        for page in reader.pages:
+            pdf_text += page.extract_text() or ""
+
+        st.text_area("PDF Text", pdf_text)
+
+        saved_note = reader
+
+
     ai = AI.AI()
 
     difficulty = st.segmented_control(
@@ -112,9 +128,14 @@ class App:
 
     if st.session_state.quiz:
         st.title("Quiz: ")
+
         for i, word in enumerate(st.session_state.quiz):
-            question = word["question"]
-            answer = st.text_area(
+             if word["difficulty"].lower() == "hard":
+                    if st.button("Show Hint", key=f"hint_{i}"):
+                        st.info(word["hint"])
+             question = word["question"]
+             answer = st.text_area(
                 question, placeholder="answer here", key=f"answer_{i}"
             )
-            word["user_answer"] = answer
+             word["user_answer"] = answer
+

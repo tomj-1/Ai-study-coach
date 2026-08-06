@@ -10,9 +10,9 @@ class AI:
         client = OpenAI()
         response = client.responses.create(
             model="gpt-5.4-mini",
-            input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","topic":"","difficulty":"{difficulty}"
-            ,"user_answer":""}}]}} Create 5 {difficulty} questions from: {notes}
-            Use consistent topic names. Format math as LaTeX with $...$.""",
+            input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","hint":"","topic":"","difficulty":"{difficulty}","user_answer":""}}]}}
+            Create 5 {difficulty} questions from: {notes}
+            Use consistent topics, LaTeX math in $...$, and hints only for hard questions.""",
             text={"format": {"type": "json_object"}},
         )
 
@@ -61,14 +61,13 @@ class AI:
         client = OpenAI()
         response = client.responses.create(
             model="gpt-5.4-mini",
-            input=f""" Return JSON only: {{"quiz":[{{"question":"","answer":"","topic":"","difficulty":"","user_answer":""}}]}}
-                Create exactly 5 questions from the notes.
-                Focus only on these topics: {topics}
-                Topic = the specific concept tested.
-                Reuse identical topic names for the same concept.
-                Set user_answer to "".
-                Notes: {notes}
-                """,
+            input=f"""Return JSON only: {{"quiz":[{{"question":"","answer":"","topic":"","difficulty":"","user_answer":""}}]}}
+            Create exactly 5 questions from the notes.
+            Focus only on: {topics}
+            Use specific, consistent topic names.
+            Set user_answer to "".
+            Format all math as LaTeX inside $...$.
+            Notes: {notes}""",
             text={"format": {"type": "json_object"}},
         )
 
