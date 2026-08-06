@@ -10,9 +10,9 @@ class AI:
         client = OpenAI()
         response = client.responses.create(
             model="gpt-5.4-mini",
-            input=f"""Return JSON only: {{"quiz":[{{"question":"","answer":"","topic":"","difficulty":"
-            {difficulty}","user_answer":""}}]}}Create 5 {difficulty} questions from these notes. 
-            Use specific, consistent topic names. Notes: {notes}""",
+            input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","topic":"","difficulty":"{difficulty}"
+            ,"user_answer":""}}]}} Create 5 {difficulty} questions from: {notes}
+            Use consistent topic names. Format math as LaTeX with $...$.""",
             text={"format": {"type": "json_object"}},
         )
 

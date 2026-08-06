@@ -23,9 +23,9 @@ class App:
 
     difficulty = st.segmented_control(
         "select difficuklty",
-        options = ["Easy", "Medium", "Hard"],
-        default = "Medium",
-        )
+        options=["Easy", "Medium", "Hard"],
+        default="Medium",
+    )
     # using session states to save values so they aren't lost on reruns
     if "quiz" not in st.session_state:
         st.session_state.quiz = []

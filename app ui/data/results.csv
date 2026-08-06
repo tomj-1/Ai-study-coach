@@ -175,3 +175,8 @@ What is 1 plus 1 in numeric form?,2,2,addition,easy,1,Correct.
 "If you combine one item with one more item, how many items do you have?",2,0,counting,easy,0,Incorrect. The correct answer is 2.
 What number comes after adding 1 and 1?,2,0,addition,easy,0,Incorrect. The correct answer is 2.
 Calculate 1 + 1.,2,0,addition,easy,0,Incorrect. The correct answer is 2.
+What is the meaning of the Chinese character $中$?,middle; center,,Chinese characters,Medium,0,No answer provided.
+What is the meaning of the Chinese character $大$?,big; large,fire ,Chinese characters,Medium,0,Incorrect. The correct meaning is 'big; large'.
+What is the meaning of the Chinese character $小$?,small; little,,Chinese characters,Medium,0,No answer provided.
+What is the meaning of the Chinese character $人$?,person; people,,Chinese characters,Medium,0,No answer provided.
+What is the meaning of the Chinese character $水$?,water,,Chinese characters,Medium,0,No answer provided.
