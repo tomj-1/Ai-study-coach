@@ -4,11 +4,13 @@ import json
 
 class AI:
 
+    def _init_(self):
+        self.client = OpenAI()
+
     def generate_quiz(self, notes, difficulty):
         self.notes = notes
         self.difficulty = difficulty
-        client = OpenAI()
-        response = client.responses.create(
+        response = self.client.responses.create(
             model="gpt-5.4-mini",
             input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","hint":"","topic":"","difficulty":"{difficulty}","user_answer":""}}]}}
             Create 5 {difficulty} questions from: {notes}
@@ -23,8 +25,7 @@ class AI:
 
     def grade_quiz(self, quiz):
         self.quiz = quiz
-        client = OpenAI()
-        response = client.responses.create(
+        response = self.client.responses.create(
             model="gpt-5.4-mini",
             input=f"""
         Grade every quiz item.
@@ -58,8 +59,7 @@ class AI:
     def weak_topic_practice(self, notes, topics):
         self.notes = notes
         self.topics = topics
-        client = OpenAI()
-        response = client.responses.create(
+        response = self.client.responses.create(
             model="gpt-5.4-mini",
             input=f"""Return JSON only: {{"quiz":[{{"question":"","answer":"","topic":"","difficulty":"","user_answer":""}}]}}
             Create exactly 5 questions from the notes.
