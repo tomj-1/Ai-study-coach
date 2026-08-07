@@ -3,37 +3,42 @@ import pandas as pd
 import AI
 import os
 from pypdf import PdfReader
+from Rag import Rag
 
 class App:
     st.title("Ai Study Coach")
 
     st.header("paste your notes")
 
+    if "notes" not in st.session_state:
+        st.session_state["notes"] = ""
+
+    def pdf_extration():
+
+        uploaded_file = st.session_state.pdf_file
+
+        if uploaded_file is not None:
+                reader = PdfReader(uploaded_file)
+        
+                pdf_text = ""
+        
+                for page in reader.pages:
+                    pdf_text += (page.extract_text() or "") + "\n"
+        
+                st.session_state["notes"] = pdf_text
+
     saved_note = {
-        "notes_title": st.text_input(
-            "notes title",
-            placeholder="put note title here",
+        "quiz_topic": st.text_input(
+            "quiz_topic",
+            placeholder="put quiz topic here",
             label_visibility="collapsed",
         ),
         "notes": st.text_area(
-            "notes", placeholder="paste notes here", label_visibility="collapsed"
+            "notes", placeholder="paste notes here", label_visibility="collapsed", key = "notes"
         ),
     }
 
-    uploaded_file = st.file_uploader("Upload a PDF", type = "pdf")
-
-    if uploaded_file is not None:
-        reader = PdfReader(uploaded_file)
-
-        pdf_text = ""
-
-        for page in reader.pages:
-            pdf_text += page.extract_text() or ""
-
-        st.text_area("PDF Text", pdf_text)
-
-        saved_note = reader
-
+    uploaded_file = st.file_uploader("Upload a PDF", type = "pdf", key = "pdf_file",  on_change=pdf_extration)
 
     ai = AI.AI()
 
@@ -46,9 +51,28 @@ class App:
     if "quiz" not in st.session_state:
         st.session_state.quiz = []
 
-    if st.button("Quiz Generate"):
-        st.session_state.notes = saved_note
-        st.session_state.quiz = ai.generate_quiz(saved_note, difficulty)
+    if st.button("Quiz Generate from AI"):
+        st.session_state.quiz = ai.generate_quiz(st.session_state["notes"], difficulty)
+
+    rag = Rag()
+    if st.button("Quiz Generate from Notes"):
+
+        chunks = rag.chunk_text(st.session_state["notes"])
+        
+        st.session_state.embedded_chunks = rag.embed_chunks(chunks)
+        
+        best_chunks = rag.retrieve(
+            query = saved_note["quiz_topic"],
+            embedded_chunks = st.session_state.embedded_chunks, 
+            amount = 3
+        )
+        context = ""
+
+        for chunk in best_chunks:
+            context += chunk["text"] + "\n"
+
+        st.session_state.quiz = ai.generate_quiz_rag(context,difficulty)
+        st.session_state["graded"] = True
 
     if "graded_quiz" not in st.session_state:
         st.session_state.graded_quiz = []

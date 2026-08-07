@@ -34,7 +34,7 @@ class Rag:
             })
         return chunk_embeddings
 
-    def retrieve(self, query, embedded_chunks, amount=3):
+    def retrieve(self, query, embedded_chunks, amount):
         query_embedding = self.get.embedding(query)
 
         for chunk in embedded_chunks:
