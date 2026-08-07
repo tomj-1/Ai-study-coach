@@ -4,7 +4,7 @@ import json
 
 class AI:
 
-    def _init_(self):
+    def __init__(self):
         self.client = OpenAI()
 
     def generate_quiz(self, notes, difficulty):
@@ -76,14 +76,16 @@ class AI:
 
         return data["quiz"]
 
-    def generate_quiz_rag(self, context, difficulty):
+    def generate_quiz_rag(self, context, difficulty,quiz_topic):
             self.context = context
             self.difficulty = difficulty
             response = self.client.responses.create(
                 model="gpt-5.4-mini",
                 input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","hint":"","topic":"","difficulty":"{difficulty}","user_answer":""}}]}}
-                Create exactly 5 {difficulty} questions using only this context:{context} Use consistent topic names, LaTeX math in $...$, and hints only for hard questions.
-                Do not use information outside the context.""",
+                Create exactly 5 {difficulty} questions specifically about "{quiz_topic}" using only the context below.
+                Do not ask questions about any other topics, even if they appear in the context.
+                Use consistent topic names, LaTeX math in $...$, and hints only for hard questions.
+                Do not use information outside the context. Context:{context}""",
                 text={"format": {"type": "json_object"}},
             )
     

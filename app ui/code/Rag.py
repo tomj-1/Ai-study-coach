@@ -3,7 +3,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 class Rag:
 
-    def _init_(self):
+    def __init__(self):
         self.client = OpenAI()
         
 
@@ -13,11 +13,11 @@ class Rag:
             chunk = text[i : i + chunk_size]
             chunks.append(chunk)
 
-        return self.chunks
+        return chunks
 
     def get_embedding(self,text):
         response = self.client.embeddings.create(
-            model="text_embedding-3-small", input=text, encoding_format="float"
+            model="text-embedding-3-small", input=text, encoding_format="float"
         )
 
         return response.data[0].embedding
@@ -35,7 +35,7 @@ class Rag:
         return chunk_embeddings
 
     def retrieve(self, query, embedded_chunks, amount):
-        query_embedding = self.get.embedding(query)
+        query_embedding = self.get_embedding(query)
 
         for chunk in embedded_chunks:
             similarity = cosine_similarity(

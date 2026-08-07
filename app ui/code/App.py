@@ -8,7 +8,7 @@ from Rag import Rag
 class App:
     st.title("Ai Study Coach")
 
-    st.header("paste your notes")
+    st.header("Notes")
 
     if "notes" not in st.session_state:
         st.session_state["notes"] = ""
@@ -43,7 +43,7 @@ class App:
     ai = AI.AI()
 
     difficulty = st.segmented_control(
-        "select difficuklty",
+        "select difficulty",
         options=["Easy", "Medium", "Hard"],
         default="Medium",
     )
@@ -71,7 +71,7 @@ class App:
         for chunk in best_chunks:
             context += chunk["text"] + "\n"
 
-        st.session_state.quiz = ai.generate_quiz_rag(context,difficulty)
+        st.session_state.quiz = ai.generate_quiz_rag(context,difficulty,saved_note["quiz_topic"])
         st.session_state["graded"] = True
 
     if "graded_quiz" not in st.session_state:
