@@ -19,7 +19,7 @@ class Rag:
         response = self.client.embeddings.create(
             model="text-embedding-3-small", input=text, encoding_format="float"
         )
-
+        
         return response.data[0].embedding
 
     def embed_chunks(self,chunks):

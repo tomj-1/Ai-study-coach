@@ -91,5 +91,6 @@ class AI:
     
             # converts json file to list
             data = json.loads(response.output_text)
+
     
             return data["quiz"]

@@ -57,9 +57,16 @@ class App:
     rag = Rag()
     if st.button("Quiz Generate from Notes"):
 
-        chunks = rag.chunk_text(st.session_state["notes"])
+        notes = st.session_state["notes"]
+
+        if "embedded_chunks" not in st.session_state or st.session_state.get("embedded_notes") != notes:
+
+
+            chunks = rag.chunk_text(notes)
         
-        st.session_state.embedded_chunks = rag.embed_chunks(chunks)
+            st.session_state.embedded_chunks = rag.embed_chunks(chunks)
+
+            st.session_state.embedded_notes = notes
         
         best_chunks = rag.retrieve(
             query = saved_note["quiz_topic"],
@@ -72,7 +79,7 @@ class App:
             context += chunk["text"] + "\n"
 
         st.session_state.quiz = ai.generate_quiz_rag(context,difficulty,saved_note["quiz_topic"])
-        st.session_state["graded"] = True
+       
 
     if "graded_quiz" not in st.session_state:
         st.session_state.graded_quiz = []
