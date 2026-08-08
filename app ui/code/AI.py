@@ -72,19 +72,18 @@ class AI:
 
         return data["quiz"]
 
-    def generate_quiz_rag(self, context, difficulty,quiz_topic):
-            response = self.client.responses.create(
-                model="gpt-5.4-mini",
-                input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","hint":"","topic":"","difficulty":"{difficulty}","user_answer":""}}]}}
+    def generate_quiz_rag(self, context, difficulty, quiz_topic):
+        response = self.client.responses.create(
+            model="gpt-5.4-mini",
+            input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","hint":"","topic":"","difficulty":"{difficulty}","user_answer":""}}]}}
                 Create exactly 5 {difficulty} questions specifically about "{quiz_topic}" using only the context below.
                 Do not ask questions about any other topics, even if they appear in the context.
                 Use consistent topic names, LaTeX math in $...$, and hints only for hard questions.
                 Do not use information outside the context. Context:{context}""",
-                text={"format": {"type": "json_object"}},
-            )
-    
-            # converts json file to list
-            data = json.loads(response.output_text)
+            text={"format": {"type": "json_object"}},
+        )
 
-    
-            return data["quiz"]
+        # converts json file to list
+        data = json.loads(response.output_text)
+
+        return data["quiz"]

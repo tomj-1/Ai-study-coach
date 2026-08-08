@@ -6,6 +6,7 @@ from pypdf import PdfReader
 from Rag import Rag
 import Analytics
 
+
 def main():
     st.title("Ai Study Coach")
 
@@ -22,14 +23,14 @@ def main():
         uploaded_file = st.session_state.pdf_file
 
         if uploaded_file is not None:
-                reader = PdfReader(uploaded_file)
-        
-                pdf_text = ""
-        
-                for page in reader.pages:
-                    pdf_text += (page.extract_text() or "") + "\n"
-        
-                st.session_state["notes"] = pdf_text
+            reader = PdfReader(uploaded_file)
+
+            pdf_text = ""
+
+            for page in reader.pages:
+                pdf_text += (page.extract_text() or "") + "\n"
+
+            st.session_state["notes"] = pdf_text
 
     saved_note = {
         "quiz_topic": st.text_input(
@@ -38,11 +39,16 @@ def main():
             label_visibility="collapsed",
         ),
         "notes": st.text_area(
-            "notes", placeholder="paste notes here", label_visibility="collapsed", key = "notes"
+            "notes",
+            placeholder="paste notes here",
+            label_visibility="collapsed",
+            key="notes",
         ),
     }
 
-    uploaded_file = st.file_uploader("Upload a PDF", type = "pdf", key = "pdf_file",  on_change=pdf_extration)
+    uploaded_file = st.file_uploader(
+        "Upload a PDF", type="pdf", key="pdf_file", on_change=pdf_extration
+    )
 
     ai = AI.AI()
 
@@ -57,7 +63,9 @@ def main():
 
     if st.button("Quiz Generate from AI"):
         try:
-            st.session_state.quiz = ai.generate_quiz(st.session_state["notes"], difficulty)
+            st.session_state.quiz = ai.generate_quiz(
+                st.session_state["notes"], difficulty
+            )
         except Exception as e:
             st.error("Quiz generation failed. Please try again.")
 
@@ -66,23 +74,24 @@ def main():
 
         notes = st.session_state["notes"]
 
-        if "embedded_chunks" not in st.session_state or st.session_state.get("embedded_notes") != notes:
-
+        if (
+            "embedded_chunks" not in st.session_state
+            or st.session_state.get("embedded_notes") != notes
+        ):
 
             chunks = rag.chunk_text(notes)
-        
+
             st.session_state.embedded_chunks = rag.embed_chunks(chunks)
 
             st.session_state.embedded_notes = notes
-        
+
         candidates = rag.retrieve(
-            query = saved_note["quiz_topic"],
-            embedded_chunks = st.session_state.embedded_chunks, 
-            amount = 7
+            query=saved_note["quiz_topic"],
+            embedded_chunks=st.session_state.embedded_chunks,
+            amount=7,
         )
 
         best_chunks = rag.rerank(saved_note["quiz_topic"], candidates, 3)
-
 
         context = ""
 
@@ -90,38 +99,27 @@ def main():
             context += chunk["text"] + "\n"
 
         try:
-            quiz = ai.generate_quiz_rag(context,difficulty,saved_note["quiz_topic"])
+            quiz = ai.generate_quiz_rag(context, difficulty, saved_note["quiz_topic"])
         except Exception as e:
             st.error("Quiz generation failed. Please try again.")
-            
+
         unique_questions = []
 
         for question in quiz:
             duplicate = rag.is_duplicate(
-                question["question"],
-                [q["question"] for q in unique_questions],
-                .82
+                question["question"], [q["question"] for q in unique_questions], 0.82
             )
 
             if not duplicate:
                 unique_questions.append(question)
 
         st.session_state.quiz = unique_questions
-       
 
     if "graded_quiz" not in st.session_state:
         st.session_state.graded_quiz = []
 
     if "graded" not in st.session_state:
         st.session_state["graded"] = False
-
-    if st.button("Grade Quiz"):
-        st.session_state["graded"] = True
-        st.session_state.graded_quiz = ai.grade_quiz(st.session_state.quiz)
-
-        st.session_state.results.extend(
-            st.session_state.graded_quiz
-        )
 
     # code to display feedback
     if st.session_state["graded"]:
@@ -138,7 +136,6 @@ def main():
             st.write(f"Grade: {item['grade'] * 100:.0f}")
             st.write(f"Feedback: {item['feedback']}")
 
-
         wrong_questions = []
 
         for item in st.session_state.graded_quiz:
@@ -153,7 +150,6 @@ def main():
             st.session_state.quiz = wrong_questions
             st.session_state["graded"] = False
             st.session_state.graded_quiz = []
-
 
     if "show_weak_topics" not in st.session_state:
         st.session_state.show_weak_topics = False
@@ -186,35 +182,37 @@ def main():
                         st.session_state.notes, selected_topics
                     )
 
+    analytics = Analytics.Analytics()
+    accuracy = analytics.overall_accuracy(st.session_state.results)
 
-    analytics =  Analytics.Analytics()
-    accuracy = analytics.overall_accuracy(
-            st.session_state.results
-        )
-    
     st.metric("Overall Accuracy", f"{accuracy:.1f}%")
 
     if st.button("Show topic analytics"):
-        topic_data = analytics.accuracy_by_topics(
-                    st.session_state.results
-                )
+        topic_data = analytics.accuracy_by_topics(st.session_state.results)
         for topic in topic_data:
             score = topic_data[topic]
 
             st.write(f"{topic}   {score:.2f}%")
-    
+
     if st.session_state.quiz:
         st.title("Quiz: ")
 
         for i, word in enumerate(st.session_state.quiz):
-             if word["difficulty"].lower() == "hard":
-                    if st.button("Show Hint", key=f"hint_{i}"):
-                        st.info(word["hint"])
-             question = word["question"]
-             answer = st.text_area(
+            if word["difficulty"].lower() == "hard":
+                if st.button("Show Hint", key=f"hint_{i}"):
+                    st.info(word["hint"])
+            question = word["question"]
+            answer = st.text_area(
                 question, placeholder="answer here", key=f"answer_{i}"
             )
-             word["user_answer"] = answer
+            word["user_answer"] = answer
+
+    if st.button("Grade Quiz"):
+        st.session_state["graded"] = True
+        st.session_state.graded_quiz = ai.grade_quiz(st.session_state.quiz)
+
+        st.session_state.results.extend(st.session_state.graded_quiz)
+
 
 if __name__ == "__main__":
     main()
