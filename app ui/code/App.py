@@ -151,11 +151,8 @@ def main():
             st.session_state["graded"] = False
             st.session_state.graded_quiz = []
 
-    if "show_weak_topics" not in st.session_state:
-        st.session_state.show_weak_topics = False
-    if st.button("weak topics"):
-        st.session_state.show_weak_topics = True
-    if st.session_state.show_weak_topics:
+    with st.expander("Weak Topics", expanded=False):
+
         if not st.session_state.results:
             # displays as a red message
             st.error("No results file found")
