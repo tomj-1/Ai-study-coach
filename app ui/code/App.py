@@ -56,7 +56,10 @@ def main():
         st.session_state.quiz = []
 
     if st.button("Quiz Generate from AI"):
-        st.session_state.quiz = ai.generate_quiz(st.session_state["notes"], difficulty)
+        try:
+            st.session_state.quiz = ai.generate_quiz(st.session_state["notes"], difficulty)
+        except Exception as e:
+            st.error("Quiz generation failed. Please try again.")
 
     rag = Rag()
     if st.button("Quiz Generate from Notes"):
@@ -86,8 +89,11 @@ def main():
         for chunk in best_chunks:
             context += chunk["text"] + "\n"
 
-        quiz = ai.generate_quiz_rag(context,difficulty,saved_note["quiz_topic"])
-
+        try:
+            quiz = ai.generate_quiz_rag(context,difficulty,saved_note["quiz_topic"])
+        except Exception as e:
+            st.error("Quiz generation failed. Please try again.")
+            
         unique_questions = []
 
         for question in quiz:
