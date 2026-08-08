@@ -88,6 +88,32 @@ class Rag:
 
         return best_chunks
 
+    def is_duplicate(self, question, existing_questions, threshold):
+
+        question_embedding = self.get_embedding(question)
+
+        for old_question in existing_questions:
+
+            old_embedding = self.get_embedding(old_question)
+
+            similarity = cosine_similarity(
+                [question_embedding],
+                [old_embedding]
+            )[0][0]
+
+            if similarity >= threshold:
+                return True
+
+            print(
+                    question,
+                    "VS",
+                    old_question,
+                    "SIMILARITY:",
+                    similarity
+                )
+
+        return False
+
 
 
 

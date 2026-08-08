@@ -82,7 +82,21 @@ class App:
         for chunk in best_chunks:
             context += chunk["text"] + "\n"
 
-        st.session_state.quiz = ai.generate_quiz_rag(context,difficulty,saved_note["quiz_topic"])
+        quiz = ai.generate_quiz_rag(context,difficulty,saved_note["quiz_topic"])
+
+        unique_questions = []
+
+        for question in quiz:
+            duplicate = rag.is_duplicate(
+                question["question"],
+                [q["question"] for q in unique_questions],
+                .82
+            )
+
+            if not duplicate:
+                unique_questions.append(question)
+
+        st.session_state.quiz = unique_questions
        
 
     if "graded_quiz" not in st.session_state:
