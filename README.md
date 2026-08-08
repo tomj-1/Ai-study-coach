@@ -14,6 +14,8 @@ AI Study Coach is an app that turns notes or pdfs into quizzes it uses Open AI's
 - Weak-topic practice
 - Accuracy analytics
 
+Demo: https://youtu.be/UFbRo3OMED0
+
 ## How it works
 
 Quiz Generate From AI:
