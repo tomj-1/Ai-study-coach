@@ -1,3 +1,5 @@
+import json
+
 from openai import OpenAI
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -50,6 +52,39 @@ class Rag:
             key = lambda chunk: chunk["similarity"], 
             reverse = True
         )[:amount]
+
+        return best_chunks
+
+    def rerank(self, query, candidates, amount):
+
+        chunks_text = ""
+
+        for i, chunk in enumerate(candidates):
+            chunks_text += f"\nChunk {i}:\n{chunk['text']}\n"
+
+        response = self.client.responses.create(
+            model = "gpt-5.4-mini",
+            input = f"""
+            Rank the chunks by how useful they are for answering the query.
+            Query:{query} Chunks:{chunks_text}Return JSON only:
+            {{ "ranking": [{{"index": 0, "score": 0.0}}]}}
+            Give every chunk a relevance score from 0 to 1."""
+        )
+
+        data = json.loads(response.output_text)
+
+        ranking = sorted(
+            data["ranking"],
+            key = lambda item: item["score"],
+            reverse = True
+        )
+
+        best_chunks = []
+
+        for item in ranking[:amount]:
+            best_chunks.append(
+                candidates[item["index"]]
+            )
 
         return best_chunks
 

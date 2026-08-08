@@ -68,11 +68,15 @@ class App:
 
             st.session_state.embedded_notes = notes
         
-        best_chunks = rag.retrieve(
+        candidates = rag.retrieve(
             query = saved_note["quiz_topic"],
             embedded_chunks = st.session_state.embedded_chunks, 
-            amount = 3
+            amount = 7
         )
+
+        best_chunks = rag.rerank(saved_note["quiz_topic"], candidates, 3)
+
+
         context = ""
 
         for chunk in best_chunks:
