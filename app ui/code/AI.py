@@ -8,8 +8,6 @@ class AI:
         self.client = OpenAI()
 
     def generate_quiz(self, notes, difficulty):
-        self.notes = notes
-        self.difficulty = difficulty
         response = self.client.responses.create(
             model="gpt-5.4-mini",
             input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","hint":"","topic":"","difficulty":"{difficulty}","user_answer":""}}]}}
@@ -24,7 +22,6 @@ class AI:
         return data["quiz"]
 
     def grade_quiz(self, quiz):
-        self.quiz = quiz
         response = self.client.responses.create(
             model="gpt-5.4-mini",
             input=f"""
@@ -57,8 +54,6 @@ class AI:
         return feedback["graded_quiz"]
 
     def weak_topic_practice(self, notes, topics):
-        self.notes = notes
-        self.topics = topics
         response = self.client.responses.create(
             model="gpt-5.4-mini",
             input=f"""Return JSON only: {{"quiz":[{{"question":"","answer":"","topic":"","difficulty":"","user_answer":""}}]}}
@@ -77,8 +72,6 @@ class AI:
         return data["quiz"]
 
     def generate_quiz_rag(self, context, difficulty,quiz_topic):
-            self.context = context
-            self.difficulty = difficulty
             response = self.client.responses.create(
                 model="gpt-5.4-mini",
                 input=f"""JSON only: {{"quiz":[{{"question":"","answer":"","hint":"","topic":"","difficulty":"{difficulty}","user_answer":""}}]}}

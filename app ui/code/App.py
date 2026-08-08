@@ -6,13 +6,16 @@ from pypdf import PdfReader
 from Rag import Rag
 import Analytics
 
-class App:
+def main():
     st.title("Ai Study Coach")
 
     st.header("Notes")
 
     if "notes" not in st.session_state:
         st.session_state["notes"] = ""
+
+    if "results" not in st.session_state:
+        st.session_state.results = []
 
     def pdf_extration():
 
@@ -109,11 +112,10 @@ class App:
     if st.button("Grade Quiz"):
         st.session_state["graded"] = True
         st.session_state.graded_quiz = ai.grade_quiz(st.session_state.quiz)
-        path = "app ui/data/results.csv"
-        df = pd.DataFrame(st.session_state.graded_quiz)
-        # method for header names since when I delete data on the file it won't make a header next try
-        file_needs_header = not os.path.exists(path) or os.path.getsize(path) == 0
-        df.to_csv(path, mode="a", header=file_needs_header, index=False)
+
+        st.session_state.results.extend(
+            st.session_state.graded_quiz
+        )
 
     # code to display feedback
     if st.session_state["graded"]:
@@ -130,7 +132,6 @@ class App:
             st.write(f"Grade: {item['grade'] * 100:.0f}")
             st.write(f"Feedback: {item['feedback']}")
 
-            st.divider
 
         wrong_questions = []
 
@@ -150,13 +151,12 @@ class App:
     if st.button("weak topics"):
         st.session_state.show_weak_topics = True
     if st.session_state.show_weak_topics:
-        path = "app ui/data/results.csv"
-        if not os.path.exists(path):
+        if not st.session_state.results:
             # displays as a red message
             st.error("No results file found")
         else:
             try:
-                results = pd.read_csv(path)
+                results = pd.DataFrame(st.session_state.results)
             except pd.errors.EmptyDataError:
                 st.success("No weak topics")
             else:
@@ -177,18 +177,17 @@ class App:
                         st.session_state.notes, selected_topics
                     )
 
-    results = pd.read_csv("app ui/data/results.csv")
-    
-    Analytics =  Analytics.Analytics()
-    accuracy = Analytics.overall_accuracy(
-            results.to_dict("records")
+
+    analytics =  Analytics.Analytics()
+    accuracy = analytics.overall_accuracy(
+            st.session_state.results
         )
     
     st.metric("Overall Accuracy", f"{accuracy:.1f}%")
 
     if st.button("Show topic analytics"):
-        topic_data = Analytics.accuracy_by_topics(
-                    results.to_dict("records")
+        topic_data = analytics.accuracy_by_topics(
+                    st.session_state.results
                 )
         for topic in topic_data:
             score = topic_data[topic]
@@ -208,3 +207,5 @@ class App:
             )
              word["user_answer"] = answer
 
+if __name__ == "__main__":
+    main()

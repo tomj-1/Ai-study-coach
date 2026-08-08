@@ -27,9 +27,10 @@ class Analytics:
         total = 0
 
         for result in results:
-            if result["grade"] == 100:
-                result["grade"] = 1
-            total += result["grade"]
+            grade  = result["grade"]
+            if grade == 100:
+                grade = 1
+            total += grade
             
 
         return (total / len(results)) * 100

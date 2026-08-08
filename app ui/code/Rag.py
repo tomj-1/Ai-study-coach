@@ -82,9 +82,12 @@ class Rag:
         best_chunks = []
 
         for item in ranking[:amount]:
-            best_chunks.append(
-                candidates[item["index"]]
-            )
+            index = item["index"]
+
+            if 0 <= index < len(candidates):
+                best_chunks.append(
+                    candidates[index]
+                )
 
         return best_chunks
 
