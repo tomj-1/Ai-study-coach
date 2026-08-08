@@ -4,6 +4,7 @@ import AI
 import os
 from pypdf import PdfReader
 from Rag import Rag
+import Analytics
 
 class App:
     st.title("Ai Study Coach")
@@ -143,6 +144,7 @@ class App:
         ):
             st.session_state.quiz = wrong_questions
 
+
     if "show_weak_topics" not in st.session_state:
         st.session_state.show_weak_topics = False
     if st.button("weak topics"):
@@ -175,6 +177,24 @@ class App:
                         st.session_state.notes, selected_topics
                     )
 
+    results = pd.read_csv("app ui/data/results.csv")
+    
+    Analytics =  Analytics.Analytics()
+    accuracy = Analytics.overall_accuracy(
+            results.to_dict("records")
+        )
+    
+    st.metric("Overall Accuracy", f"{accuracy:.1f}%")
+
+    if st.button("Show topic analytics"):
+        topic_data = Analytics.accuracy_by_topics(
+                    results.to_dict("records")
+                )
+        for topic in topic_data:
+            score = topic_data[topic]
+
+            st.write(f"{topic}   {score:.2f}%")
+    
     if st.session_state.quiz:
         st.title("Quiz: ")
 
