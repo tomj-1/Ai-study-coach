@@ -107,13 +107,6 @@ class Rag:
             if similarity >= threshold:
                 return True
 
-            print(
-                    question,
-                    "VS",
-                    old_question,
-                    "SIMILARITY:",
-                    similarity
-                )
 
         return False
 

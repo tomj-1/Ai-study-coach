@@ -149,11 +149,6 @@ def main():
             "Retry Wrong Question",
             key="retry_wrong_questions_button",
         ):
-            for i in range(len(st.session_state.quiz)):
-                st.session_state.pop(f"answer_{i}", None)
-
-            for item in wrong_questions:
-                item["user_answer"] = ""
 
             st.session_state.quiz = wrong_questions
             st.session_state["graded"] = False
