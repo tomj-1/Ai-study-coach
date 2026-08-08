@@ -1,11 +1,12 @@
 from openai import OpenAI
+import streamlit as st
 import json
 
 
 class AI:
 
     def __init__(self):
-        self.client = OpenAI()
+        self.client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
     def generate_quiz(self, notes, difficulty):
         response = self.client.responses.create(
