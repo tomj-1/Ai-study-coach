@@ -212,6 +212,7 @@ def main():
         st.session_state.graded_quiz = ai.grade_quiz(st.session_state.quiz)
 
         st.session_state.results.extend(st.session_state.graded_quiz)
+        st.rerun()
 
 
 if __name__ == "__main__":
